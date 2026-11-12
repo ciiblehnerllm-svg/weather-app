@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#f4f7fb" />
+  <meta name="description" content="A thoughtful, beautifully simple weather forecast." />
+  <title>Weather — a little forecast for your day</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="Forecast home"><span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 32 32"><circle cx="13" cy="12" r="6"/><path d="M19 23.5a6.5 6.5 0 1 0 0-13 6.5 6.5 0 0 0 0 13Z"/><path d="M13 2v2M13 20v2M3 12h2m16 0h2M5.9 4.9l1.4 1.4m11.4 11.4 1.4 1.4"/></svg></span><span>forecast<span class="brand-dot">.</span></span></a>
+      <div class="topbar-right"><span class="live-status"><span></span> LIVE CONDITIONS</span><button class="unit-toggle" id="unitToggle" aria-label="Switch temperature units"><span class="active" data-unit="c">°C</span><span data-unit="f">°F</span></button></div>
+    </header>
+
+    <main>
+      <section class="welcome-row">
+        <div><p class="eyebrow" id="todayLabel">YOUR LOCAL FORECAST</p><h1>Weather, <span>at a glance.</span></h1><p class="intro">A little sunshine for planning your day.</p></div>
+        <form class="search-box" id="searchForm" role="search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 4 4"/></svg><input id="citySearch" type="search" placeholder="Search a city..." autocomplete="off" aria-label="Search city" /><button type="submit" aria-label="Search">↵</button><div class="search-results" id="searchResults" hidden></div></form>
+      </section>
+
+      <div class="notice" id="notice" role="status" hidden></div>
+
+      <section class="dashboard" aria-label="Weather forecast">
+        <article class="card hero-card">
+          <div class="hero-top"><div><div class="location-line"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 10c0 5-8 12-8 12S4 15 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></svg><span id="cityName">Loading your forecast…</span><button class="icon-button" id="locateButton" title="Use my location" aria-label="Use my location"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="2"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2"/></svg></button></div><p class="hero-date" id="heroDate">Checking the skies</p></div><span class="today-pill">TODAY</span></div>
+          <div class="current-weather"><div><div class="temperature"><span id="currentTemp">--</span><sup>°</sup></div><p class="condition" id="condition">Getting the latest conditions</p><div class="feels-like">Feels like <strong id="feelsLike">--°</strong></div></div><div class="weather-illustration" id="heroIcon" aria-hidden="true"></div></div>
+          <div class="hero-divider"></div>
+          <div class="sun-times"><div class="sun-time"><span class="sun-icon sunrise">↗</span><div><small>SUNRISE</small><strong id="sunrise">--:--</strong></div></div><div class="sun-track"><span></span></div><div class="sun-time sunset-time"><span class="sun-icon sunset">↘</span><div><small>SUNSET</small><strong id="sunset">--:--</strong></div></div></div>
+        </article>
+
+        <article class="card week-card"><div class="section-heading"><div><p class="eyebrow">THE WEEK AHEAD</p><h2>5-day forecast</h2></div><span class="subtle-label">DAILY OUTLOOK</span></div><div class="week-list" id="weekList"><div class="skeleton-row"></div><div class="skeleton-row"></div><div class="skeleton-row"></div><div class="skeleton-row"></div><div class="skeleton-row"></div></div></article>
+      </section>
+
+      <section class="card hourly-card"><div class="section-heading"><div><p class="eyebrow">HOUR BY HOUR</p><h2>Today’s forecast</h2></div><span class="chart-note"><span></span> Temperature</span></div><div class="hourly-scroll"><div class="hourly-list" id="hourlyList"><div class="loading-line">Gathering the hourly forecast…</div></div></div></section>
+
+      <section class="details-grid" aria-label="Current weather details"><article class="card detail-card"><div class="detail-head"><span>Feels like</span><span class="detail-icon">◌</span></div><strong class="detail-value" id="detailFeels">--°</strong><div class="detail-foot" id="feelsCaption">Based on humidity and wind</div><div class="meter"><span id="feelsMeter"></span></div></article><article class="card detail-card"><div class="detail-head"><span>Humidity</span><span class="detail-icon humidity-icon">〰</span></div><strong class="detail-value"><span id="humidity">--</span><small>%</small></strong><div class="detail-foot" id="humidityCaption">A comfortable level</div><div class="meter"><span id="humidityMeter"></span></div></article><article class="card detail-card"><div class="detail-head"><span>Wind</span><span class="detail-icon wind-icon">↗</span></div><strong class="detail-value"><span id="wind">--</span><small> km/h</small></strong><div class="detail-foot" id="windCaption">A gentle breeze</div><div class="wind-compass"><span id="windCompass">N</span><i id="windNeedle"></i></div></article><article class="card detail-card"><div class="detail-head"><span>UV index</span><span class="detail-icon uv-icon">☼</span></div><strong class="detail-value"><span id="uv">--</span><small id="uvLevel">--</small></strong><div class="detail-foot" id="uvCaption">Check back for updates</div><div class="uv-track"><span id="uvMeter"></span></div></article></section>
+    </main>
+    <footer><span>Made for the moments between plans.</span><span>Weather data by <a href="https://open-meteo.com/" target="_blank" rel="noreferrer">Open-Meteo</a></span></footer>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>
