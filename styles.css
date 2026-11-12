@@ -71,6 +71,7 @@ body {
   color: var(--text-primary);
   min-height: 100vh;
   overflow-x: hidden;
+  overflow-y: auto;
   position: relative;
   transition: background 1s ease-in-out;
 }
@@ -90,11 +91,12 @@ body {
   position: relative;
   z-index: 1;
   max-width: 1240px;
+  width: 100%;
   margin: 0 auto;
-  padding: 24px 20px 40px;
+  padding: clamp(12px, 2.5vw, 24px) clamp(12px, 2.5vw, 20px) 32px;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: clamp(12px, 2vw, 20px);
 }
 
 /* Glass Card Base */
@@ -531,7 +533,7 @@ body {
 }
 
 .main-temperature {
-  font-size: 5.5rem;
+  font-size: clamp(3.5rem, 7vw, 5.5rem);
   font-weight: 800;
   line-height: 0.95;
   letter-spacing: -0.04em;
@@ -539,19 +541,20 @@ body {
 }
 
 .degree-symbol {
-  font-size: 3rem;
+  font-size: clamp(2rem, 4vw, 3rem);
   font-weight: 300;
   color: var(--text-secondary);
   line-height: 1;
 }
 
 .hero-icon-container {
-  width: 140px;
-  height: 140px;
+  width: clamp(90px, 12vw, 140px);
+  height: clamp(90px, 12vw, 140px);
   display: flex;
   align-items: center;
   justify-content: center;
   filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.3));
+  flex-shrink: 0;
 }
 
 .hero-icon-container svg {
@@ -716,17 +719,19 @@ body {
 }
 
 .metric-value-row {
-  margin: 12px 0 8px;
+  margin: 8px 0 6px;
   display: flex;
   align-items: baseline;
   gap: 6px;
+  flex-wrap: wrap;
 }
 
 .metric-value {
-  font-size: 1.8rem;
+  font-size: clamp(1.4rem, 2.2vw, 1.8rem);
   font-weight: 800;
   letter-spacing: -0.02em;
   font-family: var(--font-main);
+  line-height: 1.1;
 }
 
 .metric-unit {
@@ -876,9 +881,9 @@ body {
 
 .forecast-row {
   display: grid;
-  grid-template-columns: 80px 38px 1fr 100px;
+  grid-template-columns: minmax(70px, 80px) 36px 1fr auto;
   align-items: center;
-  gap: 12px;
+  gap: clamp(8px, 1.5vw, 12px);
   padding: 8px 12px;
   border-radius: var(--radius-md);
   background: rgba(255, 255, 255, 0.03);
@@ -995,19 +1000,31 @@ body {
 }
 
 /* Media Queries for Responsive Design */
-@media (max-width: 960px) {
-  .dashboard-grid {
-    grid-template-columns: 1fr;
-  }
+@media (max-width: 1100px) {
   .metrics-grid {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
+@media (max-width: 960px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 @media (max-width: 640px) {
+  .app-layout {
+    padding: 12px 10px 24px;
+    gap: 14px;
+  }
+  .glass-card {
+    padding: 16px;
+    border-radius: var(--radius-lg);
+  }
   .app-header {
     flex-direction: column;
     align-items: stretch;
+    gap: 12px;
   }
   .search-container {
     max-width: 100%;
@@ -1015,17 +1032,23 @@ body {
   .header-actions {
     justify-content: space-between;
   }
+  .city-name {
+    font-size: 1.5rem;
+  }
   .main-temperature {
-    font-size: 4rem;
+    font-size: 3.5rem;
   }
   .hero-icon-container {
-    width: 100px;
-    height: 100px;
+    width: 80px;
+    height: 80px;
   }
   .metrics-grid {
     grid-template-columns: 1fr;
+    gap: 12px;
   }
   .forecast-row {
-    grid-template-columns: 60px 32px 1fr 80px;
+    grid-template-columns: 55px 28px 1fr auto;
+    padding: 6px 8px;
+    font-size: 0.85rem;
   }
 }
