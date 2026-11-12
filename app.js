@@ -353,6 +353,9 @@ function renderWeather() {
 
   // Render 7-Day Forecast
   render7DayForecast(daily);
+
+  // Asynchronously record forecast snapshot to Neon DB
+  recordWeatherToNeon(loc, current, weatherInfo);
 }
 
 // Calculate sun arc progress
@@ -727,3 +730,39 @@ function setupAtmosphericCanvas(category, isDay) {
 // Initial Boot
 initFavorites();
 fetchWeather(state.currentLocation.latitude, state.currentLocation.longitude, state.currentLocation.name, state.currentLocation.region);
+
+// ==========================================
+// Neon Database Integration (/api/weather)
+// ==========================================
+async function recordWeatherToNeon(loc, current, weatherInfo) {
+  try {
+    const payload = {
+      cityName: loc.name,
+      region: loc.region || '',
+      latitude: loc.latitude,
+      longitude: loc.longitude,
+      temperature: current.temperature_2m,
+      apparentTemperature: current.apparent_temperature,
+      weatherCode: current.weather_code,
+      weatherDescription: weatherInfo.description,
+      humidity: current.relative_humidity_2m,
+      windSpeed: current.wind_speed_10m,
+      windDirection: current.wind_direction_10m,
+      pressure: current.surface_pressure
+    };
+
+    const res = await fetch('/api/weather', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+
+    if (res.ok) {
+      const data = await res.json();
+      console.log('Recorded weather to Neon DB:', data);
+    }
+  } catch (err) {
+    // Graceful fallback: when running locally without Vercel CLI serverless runner
+    console.debug('Neon DB record skipped (backend not active locally):', err.message);
+  }
+}
