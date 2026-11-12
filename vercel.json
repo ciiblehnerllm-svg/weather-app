@@ -1,0 +1,14 @@
+{
+  "version": 2,
+  "buildCommand": "node scripts/seed.js",
+  "outputDirectory": ".",
+  "functions": {
+    "api/**/*.js": {
+      "runtime": "@vercel/node"
+    }
+  },
+  "routes": [
+    { "src": "/api/(.*)", "dest": "/api/$1" },
+    { "src": "/(.*)", "dest": "/$1" }
+  ]
+}
